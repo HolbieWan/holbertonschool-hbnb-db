@@ -1,14 +1,9 @@
-"""
-Place related functionality
-"""
-
 import uuid
 from datetime import datetime
+from flask import current_app
 from solutions.solution.src.persistence.dbinit import db
-from solutions.solution.src.models.base import Base
-from sqlalchemy import Column, String, DateTime, ForeignKey, Float, Integer, Table
-from sqlalchemy.orm import relationship, Mapped
-
+from sqlalchemy import Column, String, DateTime, ForeignKey, Float, Integer
+from sqlalchemy.orm import relationship
 
 class Place(db.Model):
     """Place class that links to the SQLite table places"""
@@ -24,14 +19,13 @@ class Place(db.Model):
     longitude = db.Column(db.Float, nullable=True)
     city_id = db.Column(db.String(36), db.ForeignKey('cities.id'), nullable=False)
     host_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
-    updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     amenities = relationship("Amenity", secondary='place_amenity', back_populates="places")
     users = relationship("User", backref="hosted_places", lazy=True)
     place_reviews = relationship("Review", back_populates="place", lazy=True, cascade="all, delete-orphan", overlaps="place_reviews")
-    city = relationship("City", back_populates="city_places", overlaps="city_info")
-    
+    city = relationship("City", back_populates="places", overlaps="city_info")
 
     def __repr__(self) -> str:
         """Dummy repr"""
@@ -51,36 +45,37 @@ class Place(db.Model):
             "longitude": self.longitude,
             "city_id": self.city_id,
             "host_id": self.host_id,
-            "created_at": self.created_at.isoformat(),
+            "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }
 
     @staticmethod
-    def create(place: dict) -> "Place":
+    def create(data: dict) -> "Place":
         """Create a new place"""
-        from solutions.solution.src.persistence.repository_factory import get_repository
-
+        repo = current_app.repository
         new_place = Place(
-            name=place["name"],
-            description=place.get("description", ""),
-            number_rooms=place.get("number_rooms", 0),
-            number_bathrooms=place.get("number_bathrooms", 0),
-            max_guest=place.get("max_guest", 0),
-            price_by_night=place.get("price_by_night", 0),
-            latitude=place.get("latitude", None),
-            longitude=place.get("longitude", None),
-            city_id=place["city_id"],
-            host_id=place["host_id"]
+            id=str(uuid.uuid4()),
+            name=data["name"],
+            description=data.get("description", ""),
+            number_rooms=data.get("num_rooms", 0),
+            number_bathrooms=data.get("num_bathrooms", 0),
+            max_guest=data.get("max_guests", 0),
+            price_by_night=data.get("price_per_night", 0),
+            latitude=data.get("latitude", None),
+            longitude=data.get("longitude", None),
+            city_id=data["city_id"],
+            host_id=data["host_id"],
+            created_at=datetime.utcnow(),  # Manually set created_at
+            updated_at=datetime.utcnow()  # Manually set updated_at
         )
-        repo = get_repository()
         repo.save(new_place)
         return new_place
 
     @staticmethod
     def update(place_id: str, data: dict) -> "Place | None":
         """Update an existing place"""
-        from solutions.solution.src.persistence.repository_factory import get_repository
-        place = Place.query.get(place_id)
+        repo = current_app.repository
+        place = repo.get(Place, place_id)
         if not place:
             return None
         if "name" in data:
@@ -101,35 +96,45 @@ class Place(db.Model):
             place.longitude = data["longitude"]
         if "city_id" in data:
             place.city_id = data["city_id"]
-        if "user_id" in data:
+        if "host_id" in data:
             place.host_id = data["host_id"]
-        repo = get_repository()
+        place.updated_at = datetime.utcnow()  # Update updated_at manually
         repo.update(place)
         return place
 
     @staticmethod
     def delete(place_id: str) -> bool:
         """Delete a place"""
-        from solutions.solution.src.persistence.repository_factory import get_repository
-        place = Place.query.get(place_id)
+        repo = current_app.repository
+        place = repo.get(Place, place_id)
         if not place:
             return False
-        repo = get_repository()
         repo.delete(place)
         return True
-
 
     @staticmethod
     def get_all() -> list:
         """Get all places"""
-        from solutions.solution.src.persistence.repository_factory import get_repository
-        repo = get_repository()
+        repo = current_app.repository
         return repo.get_all(Place)
-
 
     @staticmethod
     def get(place_id: str) -> "Place | None":
         """Get a place by ID"""
-        from solutions.solution.src.persistence.repository_factory import get_repository
-        repo = get_repository()
+        repo = current_app.repository
         return repo.get(Place, place_id)
+    
+    @staticmethod
+    def get_by_city(city_id: str) -> list:
+        """Get all places in a city"""
+        repo = current_app.repository
+        return repo.get_by(Place, city_id=city_id)
+    
+    @staticmethod
+    def get_by_host(host_id: str) -> list:
+        """Get all places by a host"""
+        repo = current_app.repository
+        return repo.get_by(Place, user_id=host_id)
+
+# Deferred relationship definition
+Place.amenities = relationship("Amenity", secondary='place_amenity', back_populates="places")

@@ -1,0 +1,99 @@
+{
+  "country": [
+    {
+      "id": "f3fa7588-4627-434b-b760-d5b3a7b13047",
+      "name": "United States",
+      "code": "USA",
+      "created_at": "2024-07-01T16:35:28.150556",
+      "updated_at": "2024-07-01T16:35:28.150558"
+    }
+  ],
+  "user": [
+    {
+      "id": "47b0cb60-ea54-42ac-a0ba-5694e712f4c5",
+      "email": "hanibal2@gmail.com",
+      "first_name": "Hanibal",
+      "last_name": "Smith",
+      "created_at": "2024-07-01T16:29:27.276398",
+      "updated_at": "2024-07-01T18:30:27.153041"
+    },
+    {
+      "id": "25885682-e500-4ec2-b524-795517bd296f",
+      "email": "Nico2@gmail.com",
+      "first_name": "Nico",
+      "last_name": "Demus",
+      "created_at": "2024-07-01T16:42:52.898048",
+      "updated_at": "2024-07-01T16:42:52.898053"
+    }
+  ],
+  "amenity": [
+    {
+      "id": "936ca28a-e1f0-41ed-8b7f-8a4e5e8e7f7f",
+      "name": "BBQ",
+      "created_at": "2024-07-01T16:35:19.697600",
+      "updated_at": "2024-07-01T16:35:19.697604"
+    }
+  ],
+  "city": [
+    {
+      "id": "556bb6de-a4d0-4e2a-85e2-0b60f4b0d7ba",
+      "name": "New York",
+      "country_code": "USA",
+      "created_at": "2024-07-01T16:39:07.770828",
+      "updated_at": "2024-07-01T16:39:07.770831"
+    }
+  ],
+  "review": [
+    {
+      "id": "29fbff6f-421f-4920-ae62-214d94cd367d",
+      "place_id": "f6ed02b8-a367-4554-9152-89ab57fa3016",
+      "user_id": "4de2558f-b839-4557-b9fb-a44f407247ad",
+      "comment": "Pretty good!",
+      "rating": "9",
+      "created_at": "2024-07-01T16:50:50.784721",
+      "updated_at": "2024-07-01T16:50:50.784725"
+    },
+    {
+      "id": "26224fb3-0931-43d9-8844-f23f81b2580c",
+      "place_id": "f6ed02b8-a367-4554-9152-89ab57fa3016",
+      "user_id": "f6ed02b8-a367-4554-9152-89ab57fa3016",
+      "comment": "great!",
+      "rating": "8",
+      "created_at": "2024-07-01T16:53:12.525830",
+      "updated_at": "2024-07-01T16:53:12.525833"
+    }
+  ],
+  "place": [
+    {
+      "id": "32fe2e9b-c490-4231-9967-5bb219847c68",
+      "name": "Chez Tata",
+      "description": "Top la classe",
+      "number_rooms": 5,
+      "number_bathrooms": 5,
+      "max_guest": 6,
+      "price_by_night": 99,
+      "latitude": 47.2184,
+      "longitude": -1.5536,
+      "city_id": "London",
+      "host_id": "f6ed02b8-a367-4554-9152-89ab57fa3016",
+      "created_at": "2024-07-01T16:39:21.513657",
+      "updated_at": "2024-07-01T16:39:21.513661"
+    },
+    {
+      "id": "8b32d116-62c3-4942-a84d-56618002088a",
+      "name": "Chez Hanibal Smith",
+      "description": "\u00e7a pue du cul",
+      "number_rooms": 5,
+      "number_bathrooms": 5,
+      "max_guest": 6,
+      "price_by_night": 99,
+      "latitude": 47.2184,
+      "longitude": -1.5536,
+      "city_id": "New York",
+      "host_id": "47b0cb60-ea54-42ac-a0ba-5694e712f4c5",
+      "created_at": "2024-07-01T16:49:26.063550",
+      "updated_at": "2024-07-01T16:49:26.063553"
+    }
+  ],
+  "placeamenity": []
+}

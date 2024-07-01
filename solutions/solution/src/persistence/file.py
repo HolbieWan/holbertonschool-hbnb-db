@@ -1,12 +1,19 @@
 """
 This module exports a Repository that persists data in a JSON file
 """
-
+import uuid
 from datetime import datetime
 import json
 from solutions.solution.src.models.base import Base
 from solutions.solution.src.persistence.repository import Repository
 from solutions.solution.utils.constants import FILE_STORAGE_FILENAME
+
+from solutions.solution.src.models.amenity import Amenity, PlaceAmenity
+from solutions.solution.src.models.city import City
+from solutions.solution.src.models.country import Country
+from solutions.solution.src.models.place import Place
+from solutions.solution.src.models.review import Review
+from solutions.solution.src.models.user import User
 
 
 class FileRepository(Repository):
@@ -33,18 +40,34 @@ class FileRepository(Repository):
             k: [v.to_dict() for v in l if type(v) is not dict]
             for k, l in self.__data.items()
         }
-
+        #print(f"Saving data to {self.__filename}: {json.dumps(serialized, indent=2)}")
         with open(self.__filename, "w") as file:
-            json.dump(serialized, file)
+            json.dump(serialized, file, indent=2)
+
+    def _get_model_name(self, model_name):
+        """Helper method to ensure model_name is a string"""
+        if isinstance(model_name, type):
+            return model_name.__name__.lower()
+        return model_name.lower()
 
     def get_all(self, model_name: str):
         """Get all objects of a given model"""
-        return self.__data.get(model_name, [])
+        model_name_str = self._get_model_name(model_name)
+        return self.__data.get(model_name_str, [])
 
     def get(self, model_name: str, obj_id: str):
         """Get an object by its ID"""
-        for obj in self.get_all(model_name):
+        model_name_str = self._get_model_name(model_name)
+        for obj in self.get_all(model_name_str):
             if obj.id == obj_id:
+                return obj
+        return None
+
+    def get_by_code(self, model_name: str, code: str):
+        """Get an object by its code (only applicable for Country in this context)"""
+        model_name_str = self._get_model_name(model_name)
+        for obj in self.get_all(model_name_str):
+            if getattr(obj, "code", None) == code:
                 return obj
         return None
 
@@ -54,20 +77,29 @@ class FileRepository(Repository):
         try:
             with open(self.__filename, "r") as file:
                 file_data = json.load(file)
+            #print(f"Loaded data from {self.__filename}: {json.dumps(file_data, indent=2)}")
         except FileNotFoundError:
-            from src.models.country import Country
-
-            self.__data["country"] = [Country("Uruguay", "UY")]
-
+            print(f"File {self.__filename} not found. Initializing default data.")
+            self._initialize_default_data()
             self._save_to_file()
+            return  # No need to load data after initializing default
 
-        from src.models.amenity import Amenity, PlaceAmenity
-        from src.models.city import City
-        from src.models.country import Country
-        from src.models.place import Place
-        from src.models.review import Review
-        from src.models.user import User
+        self._load_data(file_data)
 
+    def _initialize_default_data(self):
+        """Initialize default data if file not found"""
+        print("Initializing default data")
+        default_country = Country(
+            id=str(uuid.uuid4()), 
+            name="Uruguay", 
+            code="UY", 
+            created_at=datetime.utcnow(), 
+            updated_at=datetime.utcnow()
+        )
+        self.__data["country"] = [default_country]
+
+    def _load_data(self, file_data):
+        """Load data from file into the repository"""
         models = {
             "amenity": Amenity,
             "city": City,
@@ -77,21 +109,20 @@ class FileRepository(Repository):
             "review": Review,
             "user": User,
         }
+        for model_name, data_list in file_data.items():
+            for item in data_list:
+                instance = self._instantiate_model(models[model_name], item)
+                if instance:
+                    self.save(data=instance, save_to_file=False)
 
-        for model, data in file_data.items():
-            for item in data:
-                instance: Base = models[model](**item)
-
-                if "created_at" in item:
-                    instance.created_at = datetime.fromisoformat(
-                        item["created_at"]
-                    )
-                if "updated_at" in item:
-                    instance.updated_at = datetime.fromisoformat(
-                        item["updated_at"]
-                    )
-
-                self.save(data=instance, save_to_file=False)
+    def _instantiate_model(self, model_class, data):
+        """Instantiate a model dynamically"""
+        instance = model_class(**data)
+        if "created_at" in data:
+            instance.created_at = datetime.fromisoformat(data["created_at"])
+        if "updated_at" in data:
+            instance.updated_at = datetime.fromisoformat(data["updated_at"])
+        return instance
 
     def save(self, data: Base, save_to_file=True):
         """Save an object to the repository"""
@@ -101,6 +132,7 @@ class FileRepository(Repository):
             self.__data[model] = []
 
         self.__data[model].append(data)
+        #print(f"Saved object to model {model}: {data.to_dict()}")
 
         if save_to_file:
             self._save_to_file()

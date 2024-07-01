@@ -1,12 +1,8 @@
-# solutions/solution/src/models/user.py
-
 import uuid
 from datetime import datetime
+from flask import current_app
 from solutions.solution.src.persistence.dbinit import db
-from solutions.solution.src.models.base import Base
-from solutions.solution.src.persistence.repository_factory import get_repository
-from sqlalchemy import Column, String, DateTime, ForeignKey
-
+from sqlalchemy import Column, String, Boolean, DateTime
 
 class User(db.Model):
     """User class that links to the SQLite table users"""
@@ -31,32 +27,35 @@ class User(db.Model):
             "email": self.email,
             "first_name": self.first_name,
             "last_name": self.last_name,
-            "created_at": self.created_at.isoformat(),
+            "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }
 
     @staticmethod
     def create(user: dict) -> "User":
         """Create a new user"""
-        from solutions.solution.src.persistence.repository_factory import get_repository
-        users = User.query.all()
+        repo = current_app.repository
+        users = repo.get_all(User)
         for u in users:
             if u.email == user["email"]:
                 raise ValueError("User already exists")
         new_user = User(
+            id=str(uuid.uuid4()),  # Ensure ID is set correctly
             email=user["email"],
             first_name=user["first_name"],
             last_name=user["last_name"],
-            password=user.get("password", "")  # Add password handling as needed
+            password=user.get("password", ""),  # Add password handling as needed
+            created_at=datetime.utcnow(),  # Set created_at manually
+            updated_at=datetime.utcnow()  # Set updated_at manually
         )
-        repo = get_repository()
         repo.save(new_user)
         return new_user
 
     @staticmethod
     def update(user_id: str, data: dict) -> "User | None":
         """Update an existing user"""
-        user = User.query.get(user_id)
+        repo = current_app.repository
+        user = repo.get(User, user_id)
         if not user:
             return None
         if "email" in data:
@@ -65,28 +64,28 @@ class User(db.Model):
             user.first_name = data["first_name"]
         if "last_name" in data:
             user.last_name = data["last_name"]
-        repo = get_repository()
+        user.updated_at = datetime.utcnow()  # Update updated_at manually
         repo.update(user)
         return user
 
     @staticmethod
     def delete(user_id: str) -> bool:
         """Delete a user"""
-        user = User.query.get(user_id)
+        repo = current_app.repository
+        user = repo.get(User, user_id)
         if not user:
             return False
-        repo = get_repository()
         repo.delete(user)
         return True
 
     @staticmethod
     def get_all() -> list:
         """Get all users"""
-        repo = get_repository()
+        repo = current_app.repository
         return repo.get_all(User)
 
     @staticmethod
     def get(user_id: str) -> "User | None":
         """Get a user by ID"""
-        repo = get_repository()
+        repo = current_app.repository
         return repo.get(User, user_id)

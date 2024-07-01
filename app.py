@@ -2,30 +2,39 @@ from flask import Flask
 from config import config
 from flask_migrate import Migrate
 import os
-from solutions.solution.src.persistence.dbinit import db  # Import db from db_init
+from solutions.solution.src.persistence import get_repository
+from solutions.solution.src.persistence.db import DBRepository  # Import DBRepository for isinstance check
 
 def create_app():
     app = Flask(__name__)
     env = os.getenv('FLASK_ENV', 'development')
-    storage_type = os.getenv('STORAGE_TYPE', 'db')
+    repo_env = os.getenv('REPOSITORY_ENV_VAR', 'memory')
     print(f"FLASK_ENV is set to: {env}")
-    print(f"STORAGE_TYPE is set to: {storage_type}")
+    print(f"REPOSITORY_ENV_VAR is set to: {repo_env}")
     app.config.from_object(config[env])
     print(f"App config: {app.config['SQLALCHEMY_DATABASE_URI']}")
 
-    db.init_app(app)
-    Migrate(app, db)  # Initialize Flask-Migrate
+    # Initialize the appropriate repository
+    repo = get_repository()
+    app.repository = repo
+    print(f"Using {repo.__class__.__name__} as repository")
 
-    with app.app_context():
-        # Import models here to ensure they are detected by Alembic
-        from solutions.solution.src.models.user import User
-        from solutions.solution.src.models.country import Country
-        from solutions.solution.src.models.city import City
-        from solutions.solution.src.models.place import Place
-        from solutions.solution.src.models.amenity import Amenity, PlaceAmenity
-        from solutions.solution.src.models.review import Review
+    if isinstance(repo, DBRepository):
+        print("Initializing DBRepository")
+        from solutions.solution.src.persistence.dbinit import db  # Import db from db_init
+        db.init_app(app)
+        Migrate(app, db)  # Initialize Flask-Migrate
 
-        db.create_all()  # Create tables for our models
+        with app.app_context():
+            # Import models here to ensure they are detected by Alembic
+            from solutions.solution.src.models.user import User
+            from solutions.solution.src.models.country import Country
+            from solutions.solution.src.models.city import City
+            from solutions.solution.src.models.place import Place
+            from solutions.solution.src.models.amenity import Amenity, PlaceAmenity
+            from solutions.solution.src.models.review import Review
+
+            db.create_all()  # Create tables for our models
 
     # Import and register blueprints here
     from solutions.solution.src.controllers.users import users_bp

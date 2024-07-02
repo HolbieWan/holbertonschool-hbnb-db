@@ -1,6 +1,3 @@
-"""
-Review related functionality
-"""
 import uuid
 from datetime import datetime
 from flask import current_app
@@ -20,7 +17,8 @@ class Review(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    place = relationship("Place", back_populates="place_reviews", lazy=True, overlaps="place_reviews")
+    place = relationship("Place", back_populates="place_reviews", lazy=True)
+    user = relationship("User", back_populates="reviews", lazy=True)
 
     def __repr__(self) -> str:
         """Dummy repr"""

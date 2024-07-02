@@ -5,7 +5,6 @@ from solutions.solution.src.persistence.dbinit import db
 from sqlalchemy import Column, String, DateTime, ForeignKey, Float, Integer
 from sqlalchemy.orm import relationship
 
-
 class Place(db.Model):
     """Place class that links to the SQLite table places"""
     __tablename__ = 'places'
@@ -25,8 +24,7 @@ class Place(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     amenities = relationship("Amenity", secondary='place_amenity', back_populates="places")
-    users = relationship("User", backref="hosted_places", lazy=True)
-    place_reviews = relationship("Review", back_populates="place", lazy=True, cascade="all, delete-orphan", overlaps="place_reviews")
+    place_reviews = relationship("Review", back_populates="place", lazy=True, cascade="all, delete-orphan")
     city = relationship("City", back_populates="places", overlaps="city_info")
 
     def __repr__(self) -> str:
@@ -147,6 +145,3 @@ class Place(db.Model):
         """Get all places by a host"""
         repo = current_app.repository
         return repo.get_by(Place, user_id=host_id)
-
-# Deferred relationship definition
-Place.amenities = relationship("Amenity", secondary='place_amenity', back_populates="places")

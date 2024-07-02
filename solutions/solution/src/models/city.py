@@ -14,6 +14,9 @@ class City(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    country = relationship('Country', back_populates='cities', lazy=True)
+    places = relationship("Place", back_populates="city", lazy=True, cascade="all, delete-orphan", overlaps="city_info")
+
     def __repr__(self) -> str:
         """Dummy repr"""
         return f"<City {self.id} ({self.name} {self.created_at} {self.updated_at})>"
@@ -88,6 +91,3 @@ class City(db.Model):
         """Get all cities by country code"""
         repo = current_app.repository
         return repo.get_by(City, "country_code", country_code)
-
-# Deferred relationship definition
-City.places = relationship("Place", back_populates="city", lazy=True, overlaps="city_info")

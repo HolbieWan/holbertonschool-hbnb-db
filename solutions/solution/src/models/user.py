@@ -2,7 +2,8 @@ import uuid
 from datetime import datetime
 from flask import current_app
 from solutions.solution.src.persistence.dbinit import db
-from sqlalchemy import Column, String, Boolean, DateTime
+from sqlalchemy import Column, String, Boolean, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 
 class User(db.Model):
     """User class that links to the SQLite table users"""
@@ -15,6 +16,8 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+
+    reviews = relationship("Review", back_populates="user", lazy=True, cascade="all, delete-orphan")
 
     def __repr__(self) -> str:
         """Dummy repr"""

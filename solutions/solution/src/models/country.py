@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import current_app
 from solutions.solution.src.persistence.dbinit import db
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, String, DateTime, ForeignKey
 
 class Country(db.Model):
     """Country class that links to the SQLite table countries"""
@@ -13,6 +13,8 @@ class Country(db.Model):
     code = db.Column(db.String(2), nullable=False, unique=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    cities = relationship('City', back_populates='country', lazy=True, cascade="all, delete-orphan")
 
     def __repr__(self) -> str:
         """Dummy repr"""
@@ -95,6 +97,3 @@ class Country(db.Model):
         """Get a country by code"""
         repo = current_app.repository
         return repo.get_by_code(Country, code)
-
-# Deferred relationship definition
-Country.cities = relationship('City', backref='country', lazy=True, cascade="all, delete-orphan")

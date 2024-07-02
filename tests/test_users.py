@@ -2,7 +2,6 @@
 
 import requests
 import uuid
-
 from tests import test_functions
 
 API_URL = "http://localhost:5000"
@@ -104,6 +103,7 @@ def test_put_user():
     and checks that the response status is 200 and the returned data matches the updated data.
     """
     user_id = create_unique_user()
+    other_user_id = create_unique_user()  # Create another user for email conflict test
 
     # Update the newly created user
     updated_user = {
@@ -128,6 +128,20 @@ def test_put_user():
     assert "id" in user_data, "User ID not in response"
     assert "created_at" in user_data, "Created_at not in response"
     assert "updated_at" in user_data, "Updated_at not in response"
+
+    # Test email conflict
+    conflict_user = {
+        "email": updated_user["email"],  # Use the same email as the updated user
+        "first_name": "Jane",
+        "last_name": "Doe",
+    }
+    response = requests.put(f"{API_URL}/users/{other_user_id}", json=conflict_user)
+    assert (
+        response.status_code == 400
+    ), f"Expected status code 400 but got {response.status_code}. Response: {response.text}"
+    assert (
+        "Email already exists" in response.text
+    ), f"Expected error message 'Email already exists' but got {response.text}"
 
 
 def test_delete_user():

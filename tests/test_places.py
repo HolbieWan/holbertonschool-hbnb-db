@@ -26,17 +26,18 @@ def create_unique_user():
     return response.json()["id"]
 
 
-def create_city():
+def create_city(name_suffix: str = ""):
     """
-    Helper function to create a new city
+    Helper function to create a new city with a unique name
     Sends a POST request to /cities with new city data and returns the created city's ID.
     """
-    new_city = {"name": "Test City", "country_code": "UY"}
+    new_city = {"name": f"Test City{name_suffix}", "country_code": "UY"}
     response = requests.post(f"{API_URL}/cities", json=new_city)
     assert (
         response.status_code == 201
     ), f"Expected status code 201 but got {response.status_code}. Response: {response.text}"
     return response.json()["id"]
+
 
 
 def test_get_places():
@@ -60,7 +61,7 @@ def test_post_place():
     Sends a POST request to /places with new place data and checks that the
     response status is 201 and the returned data matches the sent data.
     """
-    city_id = create_city()
+    city_id = create_city(name_suffix=str(uuid.uuid4()))  # Ensure unique city name
     user_id = create_unique_user()
     new_place = {
         "name": "Cozy Cottage",
@@ -70,10 +71,10 @@ def test_post_place():
         "longitude": -118.243683,
         "host_id": user_id,
         "city_id": city_id,
-        "price_per_night": 100,
-        "number_of_rooms": 2,
-        "number_of_bathrooms": 1,
-        "max_guests": 4,
+        "price_by_night": 100,
+        "number_rooms": 2,
+        "number_bathrooms": 1,
+        "max_guest": 4,
     }
     response = requests.post(f"{API_URL}/places", json=new_place)
     assert (
@@ -96,7 +97,7 @@ def test_get_place():
     Creates a new place, then sends a GET request to /places/{id} and checks that the
     response status is 200 and the returned data matches the created place's data.
     """
-    city_id = create_city()
+    city_id = create_city(name_suffix=str(uuid.uuid4()))  # Ensure unique city name
     user_id = create_unique_user()
     new_place = {
         "name": "Sunny Villa",
@@ -106,10 +107,10 @@ def test_get_place():
         "longitude": -119.417931,
         "host_id": user_id,
         "city_id": city_id,
-        "price_per_night": 200,
-        "number_of_rooms": 3,
-        "number_of_bathrooms": 2,
-        "max_guests": 6,
+        "price_by_night": 200,
+        "number_rooms": 3,
+        "number_bathrooms": 2,
+        "max_guest": 6,
     }
     response = requests.post(f"{API_URL}/places", json=new_place)
     assert (
@@ -122,11 +123,24 @@ def test_get_place():
     assert (
         response.status_code == 200
     ), f"Expected status code 200 but got {response.status_code}. Response: {response.text}"
+    
     place_data = response.json()
+
+    # Print out the response JSON for debugging
+    print("Response JSON:", place_data)
+
+    # Check if the response keys match the request keys
+    for key in new_place:
+        assert (
+            key in place_data
+        ), f"Expected key {key} in response but it was not found"
+
+    # Validate the values
     for key in new_place:
         assert (
             place_data[key] == new_place[key]
         ), f"Expected {key} to be {new_place[key]} but got {place_data[key]}"
+    
     assert "id" in place_data, "Place ID not in response"
     assert "created_at" in place_data, "Created_at not in response"
     assert "updated_at" in place_data, "Updated_at not in response"
@@ -138,7 +152,7 @@ def test_put_place():
     Creates a new place, then sends a PUT request to /places/{id} with updated place data
     and checks that the response status is 200 and the returned data matches the updated data.
     """
-    city_id = create_city()
+    city_id = create_city(name_suffix=str(uuid.uuid4()))  # Ensure unique city name
     user_id = create_unique_user()
     new_place = {
         "name": "Mountain Retreat",
@@ -148,10 +162,10 @@ def test_put_place():
         "longitude": -74.005974,
         "host_id": user_id,
         "city_id": city_id,
-        "price_per_night": 150,
-        "number_of_rooms": 4,
-        "number_of_bathrooms": 3,
-        "max_guests": 8,
+        "price_by_night": 150,
+        "number_rooms": 4,
+        "number_bathrooms": 3,
+        "max_guest": 8,
     }
     response = requests.post(f"{API_URL}/places", json=new_place)
     assert (
@@ -168,10 +182,10 @@ def test_put_place():
         "longitude": -77.03637,
         "host_id": user_id,
         "city_id": city_id,
-        "price_per_night": 180,
-        "number_of_rooms": 3,
-        "number_of_bathrooms": 2,
-        "max_guests": 6,
+        "price_by_night": 180,
+        "number_rooms": 3,
+        "number_bathrooms": 2,
+        "max_guest": 6,
     }
     response = requests.put(f"{API_URL}/places/{place_id}", json=updated_place)
     assert (
@@ -193,7 +207,7 @@ def test_delete_place():
     Creates a new place, then sends a DELETE request to /places/{id} and checks that the
     response status is 204 indicating successful deletion.
     """
-    city_id = create_city()
+    city_id = create_city(name_suffix=str(uuid.uuid4()))  # Ensure unique city name
     user_id = create_unique_user()
     new_place = {
         "name": "Urban Apartment",
@@ -203,10 +217,10 @@ def test_delete_place():
         "longitude": -122.419418,
         "host_id": user_id,
         "city_id": city_id,
-        "price_per_night": 120,
-        "number_of_rooms": 2,
-        "number_of_bathrooms": 1,
-        "max_guests": 4,
+        "price_by_night": 120,
+        "number_rooms": 2,
+        "number_bathrooms": 1,
+        "max_guest": 4,
     }
     response = requests.post(f"{API_URL}/places", json=new_place)
     assert (
@@ -219,16 +233,3 @@ def test_delete_place():
     assert (
         response.status_code == 204
     ), f"Expected status code 204 but got {response.status_code}. Response: {response.text}"
-
-
-if __name__ == "__main__":
-    # Run the tests
-    test_functions(
-        [
-            test_get_places,
-            test_post_place,
-            test_get_place,
-            test_put_place,
-            test_delete_place,
-        ]
-    )

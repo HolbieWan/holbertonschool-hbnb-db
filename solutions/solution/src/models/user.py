@@ -59,6 +59,11 @@ class User(db.Model):
         if not user:
             return None
         if "email" in data:
+            existing_users = repo.get_all(User)
+            
+            for existing_user in existing_users:
+                if existing_user.email == data["email"] and existing_user.id != user_id:
+                    raise ValueError("Email already exists")
             user.email = data["email"]
         if "first_name" in data:
             user.first_name = data["first_name"]

@@ -1,98 +1,479 @@
 {
   "country": [
     {
-      "id": "f3fa7588-4627-434b-b760-d5b3a7b13047",
-      "name": "United States",
-      "code": "USA",
-      "created_at": "2024-07-01T16:35:28.150556",
-      "updated_at": "2024-07-01T16:35:28.150558"
+      "id": "0a2d7531-2388-4125-bb22-def5353fbe54",
+      "name": "Uruguay",
+      "code": "UY",
+      "created_at": "2024-07-02T17:06:51.541608",
+      "updated_at": "2024-07-02T17:06:51.541610"
     }
   ],
   "user": [
     {
-      "id": "47b0cb60-ea54-42ac-a0ba-5694e712f4c5",
-      "email": "hanibal2@gmail.com",
-      "first_name": "Hanibal",
-      "last_name": "Smith",
-      "created_at": "2024-07-01T16:29:27.276398",
-      "updated_at": "2024-07-01T18:30:27.153041"
+      "id": "a8d55194-130d-438b-831c-2d7bb4fdca78",
+      "email": "test.user.cb91ff90-ca9d-4d80-b969-1e4a696a422e@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:56.847102",
+      "updated_at": "2024-07-02T17:06:56.847103"
     },
     {
-      "id": "25885682-e500-4ec2-b524-795517bd296f",
-      "email": "Nico2@gmail.com",
-      "first_name": "Nico",
-      "last_name": "Demus",
-      "created_at": "2024-07-01T16:42:52.898048",
-      "updated_at": "2024-07-01T16:42:52.898053"
+      "id": "a7af61a4-0175-4234-9c57-4b4f2fcea428",
+      "email": "test.user.e5ca605f-fd60-417c-a9ec-5d165694f222@example.com",
+      "first_name": "John",
+      "last_name": "Doe",
+      "created_at": "2024-07-02T17:06:56.850248",
+      "updated_at": "2024-07-02T17:06:56.850248"
+    },
+    {
+      "id": "c32109b4-5204-4be8-bb1b-bb1c5645db15",
+      "email": "updated.user.e5e4e20c-0ae5-469b-a72f-5b8d890277b7@example.com",
+      "first_name": "John",
+      "last_name": "Smith",
+      "created_at": "2024-07-02T17:06:56.852445",
+      "updated_at": "2024-07-02T19:06:56.856007"
+    },
+    {
+      "id": "93fdeff1-ca7f-4ea4-8c31-6002492cfa4e",
+      "email": "test.user.d666c140-a997-406a-8915-21f056de416c@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:56.854793",
+      "updated_at": "2024-07-02T17:06:56.854794"
+    },
+    {
+      "id": "f8855c4c-f8b9-4989-b769-4c2c7ba6dfaf",
+      "email": "test.user.cefd8807-1635-4a29-828e-4660984a411d@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:56.906445",
+      "updated_at": "2024-07-02T17:06:56.906446"
+    },
+    {
+      "id": "27dd3dcd-3309-43cc-885b-e85719a96e77",
+      "email": "test.user.7fbfac75-388d-45d2-b51a-d6c5f0575d60@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:56.917477",
+      "updated_at": "2024-07-02T17:06:56.917479"
+    },
+    {
+      "id": "f49d9d06-f85c-45b5-ac6f-f5981705318b",
+      "email": "test.user.1c7f48b6-b7ec-4a7e-9a0a-90eefb3d3272@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:56.929045",
+      "updated_at": "2024-07-02T17:06:56.929048"
+    },
+    {
+      "id": "1b4483a9-fcf4-4589-88cd-1d68cfcc1180",
+      "email": "test.user.41bcbf1b-48bb-4ce9-8f40-151b8803c44e@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:56.950888",
+      "updated_at": "2024-07-02T17:06:56.950889"
+    },
+    {
+      "id": "b63b4e97-82c6-43e5-8a49-261c5391f109",
+      "email": "test.user.830a3262-80c9-4228-81f3-e7683c27f108@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:56.961462",
+      "updated_at": "2024-07-02T17:06:56.961463"
+    },
+    {
+      "id": "dbbb0f67-21f5-4b18-8146-4b31f7c3a6cb",
+      "email": "test.user.68691daa-41c3-44df-9a96-ad92c38d3c36@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:56.970586",
+      "updated_at": "2024-07-02T17:06:56.970586"
+    },
+    {
+      "id": "289c8e1e-4090-40e5-94f6-981b98e33fca",
+      "email": "test.user.db9a8a05-70e0-4175-9f3d-ab7a4989473f@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:56.976868",
+      "updated_at": "2024-07-02T17:06:56.976868"
+    },
+    {
+      "id": "ee5b2d54-fc25-4de8-ab05-88b024b890c3",
+      "email": "test.user.b138e12e-6f69-4bb7-88f8-c58bbe43d828@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:56.985435",
+      "updated_at": "2024-07-02T17:06:56.985436"
+    },
+    {
+      "id": "e69fd66b-ec96-4573-819d-d161e457e24a",
+      "email": "test.user.b7ac3741-b6a6-4462-8f43-e89c04988919@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:56.991254",
+      "updated_at": "2024-07-02T17:06:56.991255"
+    },
+    {
+      "id": "d22d1482-f35f-4cbf-a1bd-4336db33fb4b",
+      "email": "test.user.ed3ca38f-94f4-4d46-96f6-17f12fc70f18@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:57.000596",
+      "updated_at": "2024-07-02T17:06:57.000598"
+    },
+    {
+      "id": "50aeba3b-7a2e-4f6b-aa65-4f639ee0bf45",
+      "email": "test.user.4688da4e-8d95-49e1-ba90-790ae802f4fa@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:57.006159",
+      "updated_at": "2024-07-02T17:06:57.006160"
+    },
+    {
+      "id": "d2a94a72-9d30-40c6-a043-ac2708b1eb96",
+      "email": "test.user.1e042b07-9f62-475d-882f-8385084a1726@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:57.014471",
+      "updated_at": "2024-07-02T17:06:57.014472"
+    },
+    {
+      "id": "6004ee58-3f87-4041-8f55-9386c8b0b0f3",
+      "email": "test.user.6cf955b4-bb2a-498e-b572-925bb134ba7d@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:57.020104",
+      "updated_at": "2024-07-02T17:06:57.020105"
+    },
+    {
+      "id": "986558b0-51c0-4acd-9ce0-abecf3908ad2",
+      "email": "test.user.a1f86343-3e25-40b1-ac15-d047906f6345@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:57.029082",
+      "updated_at": "2024-07-02T17:06:57.029082"
+    },
+    {
+      "id": "6ef6f5c4-6030-474c-b6e8-aabdc8bbc13e",
+      "email": "test.user.02526eaa-7765-4428-a0e9-22cd606b908b@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:57.036183",
+      "updated_at": "2024-07-02T17:06:57.036184"
+    },
+    {
+      "id": "031a5f28-9b26-4cd3-8b04-d4473b59622e",
+      "email": "test.user.4fdfa25e-e07b-4de9-aad5-095b6121a156@example.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "created_at": "2024-07-02T17:06:57.044213",
+      "updated_at": "2024-07-02T17:06:57.044213"
     }
   ],
   "amenity": [
     {
-      "id": "936ca28a-e1f0-41ed-8b7f-8a4e5e8e7f7f",
-      "name": "BBQ",
-      "created_at": "2024-07-01T16:35:19.697600",
-      "updated_at": "2024-07-01T16:35:19.697604"
+      "id": "0806d2c8-f338-4a41-a418-1733682a449c",
+      "name": "Test Amenity 4db81f5c-b40e-490d-9259-da73132fb411",
+      "created_at": "2024-07-02T17:06:56.887174",
+      "updated_at": "2024-07-02T17:06:56.887174"
+    },
+    {
+      "id": "21d2a2d8-3689-4d6d-878e-487a24a0d926",
+      "name": "Test Amenity 260fbd86-fe4d-4784-b3bd-2fec2e2aeb4e",
+      "created_at": "2024-07-02T17:06:56.890864",
+      "updated_at": "2024-07-02T17:06:56.890867"
+    },
+    {
+      "id": "2344dbed-ac91-4a6a-90cb-e6825821fd9a",
+      "name": "Updated Amenity ee7f3aaa-12a1-4d56-aa33-aaef97c45d14",
+      "created_at": "2024-07-02T17:06:56.893732",
+      "updated_at": "2024-07-02T19:06:56.895152"
     }
   ],
   "city": [
     {
-      "id": "556bb6de-a4d0-4e2a-85e2-0b60f4b0d7ba",
-      "name": "New York",
-      "country_code": "USA",
-      "created_at": "2024-07-01T16:39:07.770828",
-      "updated_at": "2024-07-01T16:39:07.770831"
+      "id": "e6543e9c-f31b-4bc4-9daa-2e897254b4af",
+      "name": "Test City b7163324-76db-410e-a43f-30c8b13a86e1",
+      "country_code": "UY",
+      "created_at": "2024-07-02T17:06:56.868430",
+      "updated_at": "2024-07-02T17:06:56.868430"
+    },
+    {
+      "id": "1310358d-62f7-4db0-958a-21015728f809",
+      "name": "Test City 7be89f92-e9f3-4a81-9a75-c1bf8d63a6e4",
+      "country_code": "UY",
+      "created_at": "2024-07-02T17:06:56.872575",
+      "updated_at": "2024-07-02T17:06:56.872576"
+    },
+    {
+      "id": "306d73d8-0946-4055-8f98-239f96125d1c",
+      "name": "Updated City a36f0fea-892c-49dc-81c4-f315c0a79e55",
+      "country_code": "US",
+      "created_at": "2024-07-02T17:06:56.876113",
+      "updated_at": "2024-07-02T19:06:56.878150"
+    },
+    {
+      "id": "5998b11b-34c9-4127-8535-aa3586e8b88e",
+      "name": "Test Citydb6e99b2-93b0-4863-8c19-2b5680b55c81",
+      "country_code": "UY",
+      "created_at": "2024-07-02T17:06:56.903919",
+      "updated_at": "2024-07-02T17:06:56.903920"
+    },
+    {
+      "id": "4833bd17-71d9-40b9-a326-2db9badbc0ea",
+      "name": "Test City1883f91b-4d1f-47f6-8783-11766cf4f47e",
+      "country_code": "UY",
+      "created_at": "2024-07-02T17:06:56.913726",
+      "updated_at": "2024-07-02T17:06:56.913727"
+    },
+    {
+      "id": "5176d362-2f8d-433f-bfc4-a7d7dfb69b64",
+      "name": "Test Cityc03b62db-53df-4ccb-8efa-784856bbde17",
+      "country_code": "UY",
+      "created_at": "2024-07-02T17:06:56.922982",
+      "updated_at": "2024-07-02T17:06:56.922982"
+    },
+    {
+      "id": "84adc742-f784-400b-b684-5a6e317d8426",
+      "name": "Test City0b5351b9-f510-49ec-b539-e669c66c2409",
+      "country_code": "UY",
+      "created_at": "2024-07-02T17:06:56.945413",
+      "updated_at": "2024-07-02T17:06:56.945415"
+    },
+    {
+      "id": "8b8a0f22-7262-4e35-b439-0abf0aa96394",
+      "name": "Test City6b4c1935-7864-4413-96bf-57775f0d2c86",
+      "country_code": "UY",
+      "created_at": "2024-07-02T17:06:56.964713",
+      "updated_at": "2024-07-02T17:06:56.964716"
+    },
+    {
+      "id": "a5276fea-ed98-4bfa-812b-ea4d045ef1e3",
+      "name": "Test City1c546b61-75a0-4163-999c-4dcf4c9511e7",
+      "country_code": "UY",
+      "created_at": "2024-07-02T17:06:56.979276",
+      "updated_at": "2024-07-02T17:06:56.979277"
+    },
+    {
+      "id": "165531de-a356-4320-b61e-4b39cb4dc5d1",
+      "name": "Test City2b7fd025-f20d-4adb-adbe-9e5eb5cf45f7",
+      "country_code": "UY",
+      "created_at": "2024-07-02T17:06:56.994065",
+      "updated_at": "2024-07-02T17:06:56.994066"
+    },
+    {
+      "id": "4d6c8f9a-7a8c-4a8e-aaec-b26f392c5673",
+      "name": "Test Cityc7720d3f-5b03-4bff-bb31-62e6c5db0030",
+      "country_code": "UY",
+      "created_at": "2024-07-02T17:06:57.009208",
+      "updated_at": "2024-07-02T17:06:57.009208"
+    },
+    {
+      "id": "3e90dae8-8cc8-47e0-847c-233a042bc3be",
+      "name": "Test City84b7f648-74d8-420f-b423-6afd498801c2",
+      "country_code": "UY",
+      "created_at": "2024-07-02T17:06:57.022879",
+      "updated_at": "2024-07-02T17:06:57.022880"
+    },
+    {
+      "id": "7609b619-a818-4ef6-9a04-a0e3497610d9",
+      "name": "Test Cityd0dfed0a-bb34-4f72-bb56-989ecd9ed003",
+      "country_code": "UY",
+      "created_at": "2024-07-02T17:06:57.038790",
+      "updated_at": "2024-07-02T17:06:57.038790"
     }
   ],
   "review": [
     {
-      "id": "29fbff6f-421f-4920-ae62-214d94cd367d",
-      "place_id": "f6ed02b8-a367-4554-9152-89ab57fa3016",
-      "user_id": "4de2558f-b839-4557-b9fb-a44f407247ad",
-      "comment": "Pretty good!",
-      "rating": "9",
-      "created_at": "2024-07-01T16:50:50.784721",
-      "updated_at": "2024-07-01T16:50:50.784725"
+      "id": "745922d1-9c65-4395-b5ed-38738deb85af",
+      "place_id": "01fc7dd2-7586-4f07-9a4a-6da387634709",
+      "user_id": "dbbb0f67-21f5-4b18-8146-4b31f7c3a6cb",
+      "comment": "Great place to stay!",
+      "rating": 5.0,
+      "created_at": "2024-07-02T17:06:56.972327",
+      "updated_at": "2024-07-02T17:06:56.972327"
     },
     {
-      "id": "26224fb3-0931-43d9-8844-f23f81b2580c",
-      "place_id": "f6ed02b8-a367-4554-9152-89ab57fa3016",
-      "user_id": "f6ed02b8-a367-4554-9152-89ab57fa3016",
-      "comment": "great!",
-      "rating": "8",
-      "created_at": "2024-07-01T16:53:12.525830",
-      "updated_at": "2024-07-01T16:53:12.525833"
+      "id": "307efcb6-4168-43f8-8305-9bf6d4fd7846",
+      "place_id": "caa7b80c-985a-4cef-97a4-1f5494bbdbb7",
+      "user_id": "ee5b2d54-fc25-4de8-ab05-88b024b890c3",
+      "comment": "Great place to stay!",
+      "rating": 5.0,
+      "created_at": "2024-07-02T17:06:56.987150",
+      "updated_at": "2024-07-02T17:06:56.987151"
+    },
+    {
+      "id": "e3a172cb-03d6-4023-94df-93fec7b956d4",
+      "place_id": "593fcd24-504a-4555-abc9-d75192a4089d",
+      "user_id": "d22d1482-f35f-4cbf-a1bd-4336db33fb4b",
+      "comment": "Great place to stay!",
+      "rating": 5.0,
+      "created_at": "2024-07-02T17:06:57.002503",
+      "updated_at": "2024-07-02T17:06:57.002504"
+    },
+    {
+      "id": "3b51fb54-3e73-48f8-b1a5-6db99176c376",
+      "place_id": "4273a026-279d-4085-89c5-b7e0ad721b50",
+      "user_id": "d2a94a72-9d30-40c6-a043-ac2708b1eb96",
+      "comment": "This place is amazing!",
+      "rating": 4.5,
+      "created_at": "2024-07-02T17:06:57.017021",
+      "updated_at": "2024-07-02T17:06:57.017022"
+    },
+    {
+      "id": "6a2e8057-18f0-49fa-bfea-6d7ba9c85100",
+      "place_id": "020f82cf-b42b-4b28-86b1-5b102dd4c1a9",
+      "user_id": "986558b0-51c0-4acd-9ce0-abecf3908ad2",
+      "comment": "Amazing place, had a great time!",
+      "rating": 4.8,
+      "created_at": "2024-07-02T17:06:57.031009",
+      "updated_at": "2024-07-02T19:06:57.033028"
     }
   ],
   "place": [
     {
-      "id": "32fe2e9b-c490-4231-9967-5bb219847c68",
-      "name": "Chez Tata",
-      "description": "Top la classe",
-      "number_rooms": 5,
-      "number_bathrooms": 5,
+      "id": "f923b10a-3e8c-4807-b6fe-ef9e2a5f9203",
+      "name": "Sunny Villa",
+      "description": "A sunny villa near the beach.",
+      "address": "456 Beach Road",
+      "number_rooms": 3,
+      "number_bathrooms": 2,
       "max_guest": 6,
-      "price_by_night": 99,
-      "latitude": 47.2184,
-      "longitude": -1.5536,
-      "city_id": "London",
-      "host_id": "f6ed02b8-a367-4554-9152-89ab57fa3016",
-      "created_at": "2024-07-01T16:39:21.513657",
-      "updated_at": "2024-07-01T16:39:21.513661"
+      "price_by_night": 200,
+      "latitude": 36.778259,
+      "longitude": -119.417931,
+      "city_id": "5998b11b-34c9-4127-8535-aa3586e8b88e",
+      "host_id": "f8855c4c-f8b9-4989-b769-4c2c7ba6dfaf",
+      "created_at": "2024-07-02T17:06:56.909742",
+      "updated_at": "2024-07-02T17:06:56.909743"
     },
     {
-      "id": "8b32d116-62c3-4942-a84d-56618002088a",
-      "name": "Chez Hanibal Smith",
-      "description": "\u00e7a pue du cul",
-      "number_rooms": 5,
-      "number_bathrooms": 5,
+      "id": "8d15d424-78e5-4b1b-8819-7cc73a537ab1",
+      "name": "Cozy Cottage",
+      "description": "A cozy cottage in the countryside.",
+      "address": "123 Country Lane",
+      "number_rooms": 2,
+      "number_bathrooms": 1,
+      "max_guest": 4,
+      "price_by_night": 100,
+      "latitude": 34.052235,
+      "longitude": -118.243683,
+      "city_id": "4833bd17-71d9-40b9-a326-2db9badbc0ea",
+      "host_id": "27dd3dcd-3309-43cc-885b-e85719a96e77",
+      "created_at": "2024-07-02T17:06:56.920658",
+      "updated_at": "2024-07-02T17:06:56.920659"
+    },
+    {
+      "id": "c9373600-466d-41fd-b0ae-61867340ccc7",
+      "name": "Lakeside Cabin",
+      "description": "A charming cabin by the lake.",
+      "address": "101 Lakeside Drive",
+      "number_rooms": 3,
+      "number_bathrooms": 2,
       "max_guest": 6,
-      "price_by_night": 99,
-      "latitude": 47.2184,
-      "longitude": -1.5536,
-      "city_id": "New York",
-      "host_id": "47b0cb60-ea54-42ac-a0ba-5694e712f4c5",
-      "created_at": "2024-07-01T16:49:26.063550",
-      "updated_at": "2024-07-01T16:49:26.063553"
+      "price_by_night": 180,
+      "latitude": 38.89511,
+      "longitude": -77.03637,
+      "city_id": "5176d362-2f8d-433f-bfc4-a7d7dfb69b64",
+      "host_id": "f49d9d06-f85c-45b5-ac6f-f5981705318b",
+      "created_at": "2024-07-02T17:06:56.935758",
+      "updated_at": "2024-07-02T19:06:56.938911"
+    },
+    {
+      "id": "01fc7dd2-7586-4f07-9a4a-6da387634709",
+      "name": "Cozy Cottage",
+      "description": "A cozy cottage in the countryside.",
+      "address": "123 Country Lane",
+      "number_rooms": 0,
+      "number_bathrooms": 0,
+      "max_guest": 0,
+      "price_by_night": 0,
+      "latitude": 34.052235,
+      "longitude": -118.243683,
+      "city_id": "8b8a0f22-7262-4e35-b439-0abf0aa96394",
+      "host_id": "b63b4e97-82c6-43e5-8a49-261c5391f109",
+      "created_at": "2024-07-02T17:06:56.968049",
+      "updated_at": "2024-07-02T17:06:56.968050"
+    },
+    {
+      "id": "caa7b80c-985a-4cef-97a4-1f5494bbdbb7",
+      "name": "Cozy Cottage",
+      "description": "A cozy cottage in the countryside.",
+      "address": "123 Country Lane",
+      "number_rooms": 0,
+      "number_bathrooms": 0,
+      "max_guest": 0,
+      "price_by_night": 0,
+      "latitude": 34.052235,
+      "longitude": -118.243683,
+      "city_id": "a5276fea-ed98-4bfa-812b-ea4d045ef1e3",
+      "host_id": "289c8e1e-4090-40e5-94f6-981b98e33fca",
+      "created_at": "2024-07-02T17:06:56.982751",
+      "updated_at": "2024-07-02T17:06:56.982752"
+    },
+    {
+      "id": "593fcd24-504a-4555-abc9-d75192a4089d",
+      "name": "Cozy Cottage",
+      "description": "A cozy cottage in the countryside.",
+      "address": "123 Country Lane",
+      "number_rooms": 0,
+      "number_bathrooms": 0,
+      "max_guest": 0,
+      "price_by_night": 0,
+      "latitude": 34.052235,
+      "longitude": -118.243683,
+      "city_id": "165531de-a356-4320-b61e-4b39cb4dc5d1",
+      "host_id": "e69fd66b-ec96-4573-819d-d161e457e24a",
+      "created_at": "2024-07-02T17:06:56.996840",
+      "updated_at": "2024-07-02T17:06:56.996841"
+    },
+    {
+      "id": "4273a026-279d-4085-89c5-b7e0ad721b50",
+      "name": "Cozy Cottage",
+      "description": "A cozy cottage in the countryside.",
+      "address": "123 Country Lane",
+      "number_rooms": 0,
+      "number_bathrooms": 0,
+      "max_guest": 0,
+      "price_by_night": 0,
+      "latitude": 34.052235,
+      "longitude": -118.243683,
+      "city_id": "4d6c8f9a-7a8c-4a8e-aaec-b26f392c5673",
+      "host_id": "50aeba3b-7a2e-4f6b-aa65-4f639ee0bf45",
+      "created_at": "2024-07-02T17:06:57.011769",
+      "updated_at": "2024-07-02T17:06:57.011769"
+    },
+    {
+      "id": "020f82cf-b42b-4b28-86b1-5b102dd4c1a9",
+      "name": "Cozy Cottage",
+      "description": "A cozy cottage in the countryside.",
+      "address": "123 Country Lane",
+      "number_rooms": 0,
+      "number_bathrooms": 0,
+      "max_guest": 0,
+      "price_by_night": 0,
+      "latitude": 34.052235,
+      "longitude": -118.243683,
+      "city_id": "3e90dae8-8cc8-47e0-847c-233a042bc3be",
+      "host_id": "6004ee58-3f87-4041-8f55-9386c8b0b0f3",
+      "created_at": "2024-07-02T17:06:57.026099",
+      "updated_at": "2024-07-02T17:06:57.026100"
+    },
+    {
+      "id": "6d60fe6f-8425-4d94-91a3-a69a544d0776",
+      "name": "Cozy Cottage",
+      "description": "A cozy cottage in the countryside.",
+      "address": "123 Country Lane",
+      "number_rooms": 0,
+      "number_bathrooms": 0,
+      "max_guest": 0,
+      "price_by_night": 0,
+      "latitude": 34.052235,
+      "longitude": -118.243683,
+      "city_id": "7609b619-a818-4ef6-9a04-a0e3497610d9",
+      "host_id": "6ef6f5c4-6030-474c-b6e8-aabdc8bbc13e",
+      "created_at": "2024-07-02T17:06:57.041583",
+      "updated_at": "2024-07-02T17:06:57.041583"
     }
   ],
   "placeamenity": []

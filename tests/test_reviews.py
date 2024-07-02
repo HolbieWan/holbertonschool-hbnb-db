@@ -26,12 +26,12 @@ def create_user():
     return response.json()["id"]
 
 
-def create_city(country_code: str):
+def create_city(name_suffix: str = ""):
     """
-    Helper function to create a new city.
+    Helper function to create a new city with a unique name
     Sends a POST request to /cities with new city data and returns the created city's ID.
     """
-    new_city = {"name": "Test City", "country_code": country_code}
+    new_city = {"name": f"Test City{name_suffix}", "country_code": "UY"}
     response = requests.post(f"{API_URL}/cities", json=new_city)
     assert (
         response.status_code == 201
@@ -45,7 +45,7 @@ def create_place():
     Sends a POST request to /places with new place data and returns the created place's ID.
     """
     user_id = create_user()
-    city_code = create_city("UY")
+    city_code = create_city(name_suffix=str(uuid.uuid4()))  # Ensure unique city name
     new_place = {
         "name": "Cozy Cottage",
         "description": "A cozy cottage in the countryside.",
@@ -143,6 +143,7 @@ def test_post_review():
     place_id = create_place()
     user_id = create_user()
     new_review = {
+        "place_id": place_id,
         "user_id": user_id,
         "comment": "This place is amazing!",
         "rating": 4.5,

@@ -5,12 +5,14 @@ from solutions.solution.src.persistence.dbinit import db
 from sqlalchemy import Column, String, DateTime, ForeignKey, Float, Integer
 from sqlalchemy.orm import relationship
 
+
 class Place(db.Model):
     """Place class that links to the SQLite table places"""
     __tablename__ = 'places'
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     name = db.Column(db.String(128), nullable=False)
     description = db.Column(db.String(1024), nullable=True)
+    address = db.Column(db.String(256), nullable=False)
     number_rooms = db.Column(db.Integer, nullable=False, default=0)
     number_bathrooms = db.Column(db.Integer, nullable=False, default=0)
     max_guest = db.Column(db.Integer, nullable=False, default=0)
@@ -37,6 +39,7 @@ class Place(db.Model):
             "id": self.id,
             "name": self.name,
             "description": self.description,
+            "address": self.address,
             "number_rooms": self.number_rooms,
             "number_bathrooms": self.number_bathrooms,
             "max_guest": self.max_guest,
@@ -53,14 +56,21 @@ class Place(db.Model):
     def create(data: dict) -> "Place":
         """Create a new place"""
         repo = current_app.repository
+        places = repo.get_all(Place)
+
+        for p in places:
+            if p.name == data["name"] and p.city_id == data["city_id"]:
+                raise ValueError("Place already exists")
+            
         new_place = Place(
             id=str(uuid.uuid4()),
             name=data["name"],
             description=data.get("description", ""),
-            number_rooms=data.get("num_rooms", 0),
-            number_bathrooms=data.get("num_bathrooms", 0),
-            max_guest=data.get("max_guests", 0),
-            price_by_night=data.get("price_per_night", 0),
+            address=data.get("address", ""),
+            number_rooms=data.get("number_rooms", 0),
+            number_bathrooms=data.get("number_bathrooms", 0),
+            max_guest=data.get("max_guest", 0),
+            price_by_night=data.get("price_by_night", 0),
             latitude=data.get("latitude", None),
             longitude=data.get("longitude", None),
             city_id=data["city_id"],
@@ -82,6 +92,8 @@ class Place(db.Model):
             place.name = data["name"]
         if "description" in data:
             place.description = data["description"]
+        if "address" in data:
+            place.address = data["address"]
         if "number_rooms" in data:
             place.number_rooms = data["number_rooms"]
         if "number_bathrooms" in data:

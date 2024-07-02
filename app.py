@@ -3,7 +3,8 @@ from config import config
 from flask_migrate import Migrate
 import os
 from solutions.solution.src.persistence import get_repository
-from solutions.solution.src.persistence.db import DBRepository  # Import DBRepository for isinstance check
+from solutions.solution.src.persistence.db import DBRepository
+from solutions.solution.src.persistence.dbinit import db  # Ensure db is imported here
 
 def create_app():
     app = Flask(__name__)
@@ -14,19 +15,18 @@ def create_app():
     app.config.from_object(config[env])
     print(f"App config: {app.config['SQLALCHEMY_DATABASE_URI']}")
 
-    # Initialize the appropriate repository
     repo = get_repository()
     app.repository = repo
     print(f"Using {repo.__class__.__name__} as repository")
 
     if isinstance(repo, DBRepository):
         print("Initializing DBRepository")
-        from solutions.solution.src.persistence.dbinit import db  # Import db from db_init
         db.init_app(app)
-        Migrate(app, db)  # Initialize Flask-Migrate
+        print("DB initialized")
+        Migrate(app, db)
+        print("Migrate initialized")
 
         with app.app_context():
-            # Import models here to ensure they are detected by Alembic
             from solutions.solution.src.models.user import User
             from solutions.solution.src.models.country import Country
             from solutions.solution.src.models.city import City
@@ -34,9 +34,9 @@ def create_app():
             from solutions.solution.src.models.amenity import Amenity, PlaceAmenity
             from solutions.solution.src.models.review import Review
 
-            db.create_all()  # Create tables for our models
+            db.create_all()
+            print("DB tables created")
 
-    # Import and register blueprints here
     from solutions.solution.src.controllers.users import users_bp
     from solutions.solution.src.controllers.countries import country_bp
     from solutions.solution.src.controllers.cities import cities_bp

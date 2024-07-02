@@ -1,13 +1,20 @@
-from tests import test_functions
+import sys
+import os
 
+# Add the parent directory to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from tests import test_functions
 import tests.test_amenities as test_amenities
 import tests.test_countries as test_countries
 import tests.test_users as test_users
 import tests.test_reviews as test_reviews
 import tests.test_places as test_places
 
-
 def main():
+    # Create the country before running tests
+    test_countries.create_country()
+
     print(f"Executing tests: '{test_users.__doc__}'")
     r1 = test_functions(
         [
@@ -78,9 +85,9 @@ def main():
     print("# ------------------------- #")
     print("Results (Passed/Total):")
     for results, docstring in tests:
-        print(f"{docstring.strip()} ({results['ok']}/{results['total']}):")
+        docstring = docstring.strip() if docstring else "No docstring available"
+        print(f"{docstring} ({results['ok']}/{results['total']}):")
         print(f"Score: {results['ok']/results['total'] * 100}%")
-
 
 if __name__ == "__main__":
     main()

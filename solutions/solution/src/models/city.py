@@ -10,7 +10,7 @@ class City(db.Model):
     __tablename__ = 'cities'
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     name = db.Column(db.String(128), nullable=False)
-    country_code = db.Column(db.String(36), db.ForeignKey('countries.code'), nullable=False)
+    country_code = db.Column(db.String(2), db.ForeignKey('countries.code'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -32,6 +32,10 @@ class City(db.Model):
     def create(city: dict) -> "City":
         """Create a new city"""
         repo = current_app.repository
+        cities = repo.get_all(City)
+        for c in cities:
+            if c.name == city["name"] and c.country_code == city["country_code"]:
+                raise ValueError("City already exists")
         new_city = City(
             id=str(uuid.uuid4()),
             name=city["name"],

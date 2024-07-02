@@ -1,13 +1,27 @@
-""" Implement the Country and City Management Endpoints """
-
 import requests
 import uuid
-
 from tests import test_functions
+import requests
 
 API_URL = "http://localhost:5000"
-country_code = "UY"
 
+def create_country():
+    """
+    Helper function to create a country if it doesn't exist
+    """
+    country_data = {
+        "id": "UY",
+        "name": "Uruguay",
+        "code": "UY"
+    }
+    response = requests.post(f"{API_URL}/countries", json=country_data)
+    if response.status_code in [400, 409]:  # Bad Request or Conflict, country already exists
+        print("Country already exists.")
+    else:
+        assert (
+            response.status_code == 201
+        ), f"Expected status code 201 but got {response.status_code}. Response: {response.text}"
+        print("Country created.")
 
 def test_get_countries():
     """
@@ -30,26 +44,26 @@ def test_get_country():
     Sends a GET request to /countries/{code} and checks that the response status is 200
     and the returned data contains the expected fields.
     """
-    country_code = "UY"  # Use an existing country code for this test
-    response = requests.get(f"{API_URL}/countries/{country_code}")
+    response = requests.get(f"{API_URL}/countries/UY")
+    print(f"Get Country Response: {response.status_code}, {response.text}")
     assert (
         response.status_code == 200
     ), f"Expected status code 200 but got {response.status_code}. Response: {response.text}"
     country_data = response.json()
     assert (
-        country_data["code"] == country_code
-    ), f"Expected country code to be {country_code} but got {country_data['code']}"
+        country_data["code"] == "UY"
+    ), f"Expected country code to be UY but got {country_data['code']}"
     assert "name" in country_data, "Name not in response"
 
 
 def test_get_country_cities():
     """
     Test to retrieve all cities for a specific country by code
-    Sends a GET request to /countries/{code}/cities and checks that the response status is 200
+    Sends a GET request to /countries/UY/cities and checks that the response status is 200
     and the returned data is a list of cities.
     """
-    country_code = "UY"  # Use an existing country code for this test
-    response = requests.get(f"{API_URL}/countries/{country_code}/cities")
+    response = requests.get(f"{API_URL}/countries/UY/cities")
+    print(f"Get Country Cities Response: {response.status_code}, {response.text}")
     assert (
         response.status_code == 200
     ), f"Expected status code 200 but got {response.status_code}. Response: {response.text}"
@@ -57,9 +71,6 @@ def test_get_country_cities():
     assert isinstance(
         cities_data, list
     ), f"Expected response to be a list but got {type(cities_data)}"
-    # assert len(cities_data) > 0, "Expected at least one city in the response"
-    # assert "name" in cities_data[0], "City name not in response"
-    # assert "country_code" in cities_data[0], "Country code not in response"
 
 
 def test_get_cities():
@@ -83,7 +94,7 @@ def test_post_city():
     Sends a POST request to /cities with new city data and checks that the
     response status is 201 and the returned data matches the sent data.
     """
-    new_city = {"name": f"Test City {uuid.uuid4()}", "country_code": country_code}
+    new_city = {"name": f"Test City {uuid.uuid4()}", "country_code": "UY"}
     response = requests.post(f"{API_URL}/cities", json=new_city)
     assert (
         response.status_code == 201
@@ -164,6 +175,8 @@ def test_delete_city():
 
 
 if __name__ == "__main__":
+    # Create the country before running tests
+    create_country()
     # Run the tests
     test_functions(
         [

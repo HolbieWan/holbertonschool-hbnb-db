@@ -10,7 +10,7 @@ class Country(db.Model):
     __tablename__ = 'countries'
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     name = db.Column(db.String(128), nullable=False)
-    code = db.Column(db.String(2), nullable=False)
+    code = db.Column(db.String(2), nullable=False, unique=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -32,6 +32,12 @@ class Country(db.Model):
     def create(country: dict) -> "Country":
         """Create a new country"""
         repo = current_app.repository
+
+        # Check if the country already exists
+        existing_country = repo.get_by_code(Country, code=country["code"])
+        if existing_country:
+            raise ValueError(f"Country with code {country['code']} already exists")
+
         new_country = Country(
             id=str(uuid.uuid4()),
             name=country["name"],
@@ -49,6 +55,11 @@ class Country(db.Model):
         country = repo.get(Country, country_id)
         if not country:
             return None
+        # Check if the updated code already exists for another country
+        if "code" in data:
+            existing_country = repo.get_by_code(Country, code=data["code"])
+            if existing_country and existing_country.id != country_id:
+                raise ValueError(f"Country with code {data['code']} already exists")
         if "name" in data:
             country.name = data["name"]
         if "code" in data:
@@ -86,4 +97,4 @@ class Country(db.Model):
         return repo.get_by_code(Country, code)
 
 # Deferred relationship definition
-Country.cities = relationship('City', backref='country', lazy=True)
+Country.cities = relationship('City', backref='country', lazy=True, cascade="all, delete-orphan")

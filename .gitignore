@@ -1,2 +1,5 @@
+# Ignore compiled bytecode files
 *.pyc
-/__pycache__/
+
+# Ignore __pycache__ directories
+__pycache__/

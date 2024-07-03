@@ -1,4 +1,5 @@
-from tests import test_functions
+from tests.test_functions import test_functions
+import pytest
 
 import tests.test_amenities as test_amenities
 import tests.test_countries as test_countries

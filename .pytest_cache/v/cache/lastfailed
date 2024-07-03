@@ -1,0 +1,4 @@
+{
+  "tests/test_db.py": true,
+  "tests/run_all.py::test_functions": true
+}

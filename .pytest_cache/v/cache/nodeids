@@ -1,0 +1,10 @@
+[
+  "tests/run_all.py::test_functions",
+  "tests/test_database.py::test_create_amenity",
+  "tests/test_database.py::test_create_city",
+  "tests/test_database.py::test_create_country",
+  "tests/test_database.py::test_create_place",
+  "tests/test_database.py::test_create_review",
+  "tests/test_database.py::test_create_user",
+  "tests/test_database.py::test_place_amenity_association"
+]

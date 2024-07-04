@@ -1,12 +1,15 @@
 from flask import Flask
 from config import config
+#from dotenv import load_dotenv
 from flask_migrate import Migrate
 import os
 from solutions.solution.src.persistence import get_repository
 from solutions.solution.src.persistence.db import DBRepository
-from solutions.solution.src.persistence.dbinit import db  # Ensure db is imported here
+from solutions.solution.src.persistence.dbinit import db
 
 def create_app():
+    #load_dotenv()
+
     app = Flask(__name__)
     env = os.getenv('FLASK_ENV', 'development')
     repo_env = os.getenv('REPOSITORY_ENV_VAR', 'memory')

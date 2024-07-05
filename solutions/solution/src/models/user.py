@@ -4,6 +4,9 @@ from flask import current_app
 from solutions.solution.src.persistence.dbinit import db
 from sqlalchemy import Column, String, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
+from flask_bcrypt import Bcrypt
+
+bcrypt = Bcrypt()
 
 class User(db.Model):
     """User class that links to the SQLite table users"""
@@ -12,7 +15,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     first_name = db.Column(db.String(120), nullable=False)
     last_name = db.Column(db.String(120), nullable=False)
-    password = db.Column(db.String(128), nullable=False)  # Ensure secure storage
+    password = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
@@ -30,9 +33,18 @@ class User(db.Model):
             "email": self.email,
             "first_name": self.first_name,
             "last_name": self.last_name,
+            "is_admin": self.is_admin,
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }
+
+    def set_password(self, password):
+        """Hash and set the password"""
+        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+    def check_password(self, password):
+        """Check hashed password"""
+        return bcrypt.check_password_hash(self.password, password)
 
     @staticmethod
     def create(user: dict) -> "User":
@@ -43,14 +55,15 @@ class User(db.Model):
             if u.email == user["email"]:
                 raise ValueError("User already exists")
         new_user = User(
-            id=str(uuid.uuid4()),  # Ensure ID is set correctly
+            id=str(uuid.uuid4()),
             email=user["email"],
             first_name=user["first_name"],
             last_name=user["last_name"],
-            password=user.get("password", ""),  # Add password handling as needed
-            created_at=datetime.utcnow(),  # Set created_at manually
-            updated_at=datetime.utcnow()  # Set updated_at manually
+            is_admin=user.get("is_admin", False),
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow()
         )
+        new_user.set_password(user["password"])  # Set the hashed password
         repo.save(new_user)
         return new_user
 
@@ -63,7 +76,6 @@ class User(db.Model):
             return None
         if "email" in data:
             existing_users = repo.get_all(User)
-            
             for existing_user in existing_users:
                 if existing_user.email == data["email"] and existing_user.id != user_id:
                     raise ValueError("Email already exists")
@@ -72,7 +84,9 @@ class User(db.Model):
             user.first_name = data["first_name"]
         if "last_name" in data:
             user.last_name = data["last_name"]
-        user.updated_at = datetime.utcnow()  # Update updated_at manually
+        if "password" in data:
+            user.set_password(data["password"])  # Set the hashed password
+        user.updated_at = datetime.utcnow() 
         repo.update(user)
         return user
 

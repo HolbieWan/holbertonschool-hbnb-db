@@ -1,8 +1,10 @@
+import os
 from flask import Flask
 from config import config
 #from dotenv import load_dotenv
 from flask_migrate import Migrate
-import os
+from flask_jwt_extended import JWTManager
+from flask_bcrypt import Bcrypt
 from solutions.solution.src.persistence import get_repository
 from solutions.solution.src.persistence.db import DBRepository
 from solutions.solution.src.persistence.dbinit import db
@@ -11,6 +13,9 @@ def create_app():
     #load_dotenv()
 
     app = Flask(__name__)
+    bcrypt = Bcrypt(app)
+    app.config['JWT_SECRET_KEY'] = 'My_secret_key'
+    jwt = JWTManager(app)
     env = os.getenv('FLASK_ENV', 'development')
     repo_env = os.getenv('REPOSITORY_ENV_VAR', 'memory')
     print(f"FLASK_ENV is set to: {env}")
@@ -46,6 +51,7 @@ def create_app():
     from solutions.solution.src.controllers.places import places_bp
     from solutions.solution.src.controllers.amenities import amenities_bp
     from solutions.solution.src.controllers.reviews import reviews_bp
+    from solutions.solution.src.controllers.authentication import auth_bp
 
     app.register_blueprint(users_bp, url_prefix='/users')
     app.register_blueprint(country_bp, url_prefix='/countries')
@@ -53,6 +59,7 @@ def create_app():
     app.register_blueprint(places_bp, url_prefix='/places')
     app.register_blueprint(amenities_bp, url_prefix='/amenities')
     app.register_blueprint(reviews_bp, url_prefix='/reviews')
+    app.register_blueprint(auth_bp, url_prefix='/auth')
 
     return app
 

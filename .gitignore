@@ -1,6 +1,3 @@
-#Ignore editorconfig file
-.editorconfig
-
 # Ignore compiled bytecode files
 *.pyc
 
